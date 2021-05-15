@@ -28,10 +28,10 @@ public class ProductDecorator {
     @Enumerated(EnumType.STRING)
     private decoratorType decoratorFeature;
 
-    /*@OneToOne
+    @OneToOne
     @MapsId
     @JoinColumn(name = "decorator_id", referencedColumnName = "pdID")
-    private Phone phone;*/
+    private Phone phone;
 
 
 

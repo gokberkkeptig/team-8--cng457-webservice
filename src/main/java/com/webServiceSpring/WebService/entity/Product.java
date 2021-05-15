@@ -33,13 +33,13 @@ public class Product {
     @JoinColumn(name = "product_id",referencedColumnName = "pid")
     private List<Comment> commentList;
 
-    /*@OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Phone phone;
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    private Computer computer;*/
+    private Computer computer;
 
 
 }

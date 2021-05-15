@@ -9,22 +9,22 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
+@Table(name = "Phone")
 public class Phone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int phoneID;
     private int internalMemory;
 
-//    @OneToOne(mappedBy = "Product", cascade = CascadeType.ALL)
-//    @PrimaryKeyJoinColumn
-//    private ProductDecorator decorator;
+   @OneToOne(mappedBy = "phone", cascade = CascadeType.ALL)
+   @PrimaryKeyJoinColumn
+   private ProductDecorator decorator;
 
 
-//    @OneToOne
-//    @MapsId
-//    @JoinColumn(name = "phone_id", referencedColumnName = "phoneID")
-//    private Product product;
+   @OneToOne
+   @MapsId
+   @JoinColumn(name = "phone_id", referencedColumnName = "phoneID")
+   private Product product;
 
 
 }
