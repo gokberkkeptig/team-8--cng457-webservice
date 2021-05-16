@@ -41,5 +41,9 @@ public class Product {
     @PrimaryKeyJoinColumn
     private Computer computer;
 
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private ProductDecorator decorator;
+
 
 }

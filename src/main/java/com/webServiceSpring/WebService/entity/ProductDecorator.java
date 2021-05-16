@@ -31,7 +31,7 @@ public class ProductDecorator {
     @OneToOne
     @MapsId
     @JoinColumn(name = "decorator_id", referencedColumnName = "pdID")
-    private Phone phone;
+    private Product product;
 
 
 

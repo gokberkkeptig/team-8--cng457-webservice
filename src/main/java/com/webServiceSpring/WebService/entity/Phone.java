@@ -16,10 +16,6 @@ public class Phone {
     private int phoneID;
     private int internalMemory;
 
-   @OneToOne(mappedBy = "phone", cascade = CascadeType.ALL)
-   @PrimaryKeyJoinColumn
-   private ProductDecorator decorator;
-
 
    @OneToOne
    @MapsId
