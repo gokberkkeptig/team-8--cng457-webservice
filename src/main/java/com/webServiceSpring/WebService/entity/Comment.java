@@ -1,6 +1,7 @@
 package com.webServiceSpring.WebService.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,10 @@ public class Comment {
     private int cid;
     private String commentText;
     private int rating;
+
+    @ManyToOne
+    @JoinColumn(name="product_id",nullable = false)
+    @JsonBackReference
+    private Product product;
 
 }

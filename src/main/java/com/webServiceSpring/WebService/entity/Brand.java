@@ -1,5 +1,6 @@
 package com.webServiceSpring.WebService.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,12 +17,15 @@ import java.util.List;
 @Table(name = "Brand")
 public class Brand {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int brandID;
     private String name;
 
     @OneToMany(targetEntity = Product.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "brand_id",referencedColumnName = "brandID")
+    @JoinColumn(name = "brand_name",referencedColumnName = "name")
+    @JsonIgnoreProperties("productList")
     private List<Product> productList;
+
+    public void addProduct(Product p){
+        productList.add(p);
+    }
 
 }
