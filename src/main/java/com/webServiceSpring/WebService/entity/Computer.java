@@ -21,8 +21,22 @@ public class Computer {
     private Integer memory;
     private Integer storageCapacity;
 
+
     @OneToOne
     @MapsId
     @JoinColumn(name = "product_id")
     private Product product;
+
+    public Computer(int computerID, String screenResolution) {
+        this.computerID = computerID;
+        this.screenResolution = screenResolution;
+    }
+
+    public Computer(int computerID, String screenResolution, String processor, Integer memory, Integer storageCapacity) {
+        this.computerID = computerID;
+        this.screenResolution = screenResolution;
+        this.processor = processor;
+        this.memory = memory;
+        this.storageCapacity = storageCapacity;
+    }
 }

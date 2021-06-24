@@ -16,6 +16,4 @@ public class ProductFeatureKeyHolder implements Serializable {
     private int product_id;
     private int feature_id;
 
-
-
 }

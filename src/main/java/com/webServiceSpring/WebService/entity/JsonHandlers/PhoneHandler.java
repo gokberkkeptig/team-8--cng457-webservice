@@ -1,5 +1,6 @@
 package com.webServiceSpring.WebService.entity.JsonHandlers;
 
+import com.webServiceSpring.WebService.entity.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class PhoneHandler {
     private Double price;
     private String brandName;
     private List<String> featureList;
+    private List<Comment> commentList;
 }
 
 

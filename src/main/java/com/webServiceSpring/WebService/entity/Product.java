@@ -38,6 +38,7 @@ public class Product {
     private Double price;
     private Double screenSize;
 
+
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id",referencedColumnName = "pid")
     @JsonIgnoreProperties("productFeatures")
@@ -57,7 +58,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name="brand_name",nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "brandRef")
     private Brand brand;
 
     public Brand getBrand() {

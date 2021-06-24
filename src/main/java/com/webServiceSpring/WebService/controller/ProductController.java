@@ -8,11 +8,19 @@ import com.webServiceSpring.WebService.entity.JsonHandlers.ProductHandler;
 import com.webServiceSpring.WebService.entity.Product;
 import com.webServiceSpring.WebService.entity.connectors.ProductFeature;
 import com.webServiceSpring.WebService.entity.connectors.ProductFeatureKeyHolder;
+import com.webServiceSpring.WebService.service.BrandService;
+import com.webServiceSpring.WebService.service.FeaturesService;
+import com.webServiceSpring.WebService.service.ProductFeatureService;
 import com.webServiceSpring.WebService.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+/**
+ * This class is the controller of Product Entity.
+ */
 
 @RestController
 public class ProductController {
@@ -26,6 +34,13 @@ public class ProductController {
     private ProductFeatureService pfservice;
 
 
+    /**
+     * This Method adds a Product to the Product Table.
+     * @param productHandler
+     * @see ProductHandler
+     * @see Product
+     * @return Product
+     */
 
     @PostMapping("/addProduct")
     @JsonIgnoreProperties({"productList"})
@@ -54,14 +69,29 @@ public class ProductController {
         return p;
     }
 
+    /**
+     * This method gets all products from the Product table.
+     * @return List <Product>
+     */
     @GetMapping("/getProducts")
     public List<Product> getProducts(){
         return service.getProducts();
     }
+
+    /**
+     * This method returns a product given a product id from the Product table.
+     * @param id integer that represents product id.
+     * @return Product
+     */
     @GetMapping("/getProduct/{id}")
     public Product getProduct(@PathVariable int id){
         return service.getProduct(id);
     }
+
+    /**
+     * This method deletes a product given a product id from the Product Table.
+     * @param id an integer represents product id.
+     */
     @DeleteMapping("/deleteProduct/{id}")
     public String deleteProduct(@PathVariable int id){
         return service.deleteProduct(id);

@@ -1,5 +1,6 @@
 package com.webServiceSpring.WebService.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,11 +22,14 @@ public class Brand {
 
     @OneToMany(targetEntity = Product.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "brand_name",referencedColumnName = "name")
-    @JsonIgnoreProperties("productList")
+//    @JsonBackReference
     private List<Product> productList;
 
     public void addProduct(Product p){
         productList.add(p);
     }
 
+    public Brand(String name) {
+        this.name = name;
+    }
 }

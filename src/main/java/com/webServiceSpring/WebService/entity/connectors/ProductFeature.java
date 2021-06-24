@@ -26,12 +26,12 @@ public class ProductFeature {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id",insertable = false,updatable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "productRef")
     Product product;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "feature_id",insertable = false,updatable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "featureRef")
     Features feature;
 
     public Product getProduct() {

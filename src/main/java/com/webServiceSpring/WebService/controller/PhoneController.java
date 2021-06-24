@@ -14,6 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * This class is the controller of Phone Entity.
+ */
+
 @RestController
 public class PhoneController {
     @Autowired
@@ -27,15 +34,23 @@ public class PhoneController {
     @Autowired
     private ProductFeatureService pfservice;
 
+
+    /**
+     * This method adds a Phone to the phone table.
+     * @param phoneHandler which holds a phone temporarily to handle Json formats.
+     * @see PhoneHandler
+     */
     @PostMapping("/addPhone")
-    public Phone addPhone(@RequestBody PhoneHandler phoneHandler){
+    public void addPhone(@RequestBody PhoneHandler phoneHandler){
+
         Phone ph = new Phone();
         ph.setInternalMemory(phoneHandler.getInternalMemory());
-
+        
         Product p = new Product();
         p.setScreenSize(phoneHandler.getScreenSize());
         p.setPrice(phoneHandler.getPrice());
         p.setModel(phoneHandler.getModel());
+
         p.setType('P');
 
         Brand b = bservice.getBrand(phoneHandler.getBrandName());
@@ -58,17 +73,21 @@ public class PhoneController {
             pfservice.saveProductFeature(pf);
         }
 
-        return ph;
+
     }
 
 
-
-
+    /**
+     * This methods gets all phone from a particular brand.
+     * @param brand a String representing a Brand.
+     * @return List <PhoneHandler>
+     */
     @GetMapping("/getPhoneByBrand/{brand}")
     public List<PhoneHandler> getPhoneByBrand(@PathVariable String brand){
+
         int size = phservice.getPhoneByBrand(brand).size();
         int featureSize;
-        ArrayList<PhoneHandler> ph = new java.util.ArrayList<>();
+        ArrayList<PhoneHandler> ph = new ArrayList<>();
         Phone tempPhone;
         PhoneHandler temp;
         for(int i=0;i<size;i++){
@@ -82,7 +101,7 @@ public class PhoneController {
             temp.setModel(tempPhone.getProduct().getModel());
             temp.setPrice(tempPhone.getProduct().getPrice());
             featureSize=tempPhone.getProduct().getProductFeatures().size();
-            ArrayList<String> tempFeatureList = new java.util.ArrayList<>();
+            ArrayList<String> tempFeatureList = new ArrayList<>();
             for(int j=0;j<featureSize;j++){
                 tempFeatureList.add(tempPhone.getProduct().getProductFeatures().get(j).getFeature().getFeature_name());
 
@@ -90,26 +109,85 @@ public class PhoneController {
             temp.setFeatureList(tempFeatureList);
             ph.add(temp);
         }
+
         return ph;
+
     }
 
+    /**
+     *
+     * @param brand A string representing brand name
+     * @param model A string representing model of the product.
+     * @param internalMemory An integer representing the storage capacity of the phone.
+     * @param screenSizeString A string representing the screen size type of the phone(Large Screen,Small Screen etc.)
+     * @param internalMemString A string representing the internal memory type of the phone(Large Memory, Small Memory etc.)
+     * @return List <PhoneHandler>
+     * @see PhoneHandler
+     */
     @GetMapping("/getPhoneByCriteria")
-    List<PhoneHandler> getPhoneByCriteria(@RequestParam(value = "brandName",required = false) String brand,@RequestParam(value = "model",required = false) String model,@RequestParam(value = "screenSize",required = false) Double screenSize,@RequestParam(value = "internalMem",required = false) Integer internalMemory) {
-        int size = phservice.getPhoneByCriteria(brand,model,screenSize,internalMemory).size();
+    public List<PhoneHandler> getPhoneByCriteria(@RequestParam(value = "brandName",required = false) String brand,@RequestParam(value = "model",required = false) String model,@RequestParam(value = "internalMem",required = false) Integer internalMemory,@RequestParam(value = "screenSizeString",required = false) String screenSizeString,@RequestParam(value = "internalMemString",required = false) String internalMemString) {
+
+        int size = phservice.getPhoneByCriteria(brand,model,internalMemory,screenSizeString,internalMemString).size();
         int featureSize;
-        List<PhoneHandler> ph = new java.util.ArrayList<>(Collections.emptyList());
+        int commentSize;
+        List<PhoneHandler> ph = new ArrayList<>(Collections.emptyList());
         Phone tempPhone;
         PhoneHandler temp;
         for(int i=0;i<size;i++){
              temp = new PhoneHandler();
-            tempPhone = phservice.getPhoneByCriteria(brand,model,screenSize,internalMemory).get(i);
+            tempPhone = phservice.getPhoneByCriteria(brand,model,internalMemory,screenSizeString,internalMemString).get(i);
+            temp.setPhoneID(tempPhone.getPhoneID());
+            temp.setBrandName(tempPhone.getProduct().getBrand().getName());
+            temp.setModel(tempPhone.getProduct().getModel());
+            temp.setPrice(tempPhone.getProduct().getPrice());
+            temp.setScreenSize(tempPhone.getProduct().getScreenSize());
+            temp.setInternalMemory(tempPhone.getInternalMemory());
+            featureSize=tempPhone.getProduct().getProductFeatures().size();
+            List<String> tempFeatureList = new ArrayList<>(Collections.emptyList());
+            for(int j=0;j<featureSize;j++){
+                tempFeatureList.add(tempPhone.getProduct().getProductFeatures().get(j).getFeature().getFeature_name());
+
+            }
+            temp.setFeatureList(tempFeatureList);
+            commentSize = tempPhone.getProduct().getCommentList().size();
+            List<Comment> tempCommentList = new ArrayList<>(Collections.emptyList());
+            for(int j=0;j<commentSize;j++){
+                tempCommentList.add(tempPhone.getProduct().getCommentList().get(j));
+
+            }
+            temp.setCommentList(tempCommentList);
+
+            ph.add(temp);
+        }
+
+        return ph;
+    }
+
+
+    /**
+     * This methods gets all Phones from the Phone table.
+     * @return List <PhoneHandler>
+     * @see PhoneHandler
+     */
+    @GetMapping("/getPhones")
+    @JsonIgnoreProperties({"productFeatures","product","key"})
+    public List<PhoneHandler> getPhones(){
+
+        int size = phservice.getPhones().size();
+        int featureSize;
+        List<PhoneHandler> ph = new ArrayList<>(Collections.emptyList());
+        Phone tempPhone;
+        PhoneHandler temp;
+        for(int i=0;i<size;i++){
+            temp = new PhoneHandler();
+            tempPhone = phservice.getPhones().get(i);
             temp.setPhoneID(tempPhone.getPhoneID());
             temp.setBrandName(tempPhone.getProduct().getBrand().getName());
             temp.setModel(tempPhone.getProduct().getModel());
             temp.setPrice(tempPhone.getProduct().getPrice());
             temp.setScreenSize(tempPhone.getProduct().getScreenSize());
             featureSize=tempPhone.getProduct().getProductFeatures().size();
-            List<String> tempFeatureList = new java.util.ArrayList<>(Collections.emptyList());
+            List<String> tempFeatureList = new ArrayList<>(Collections.emptyList());
             for(int j=0;j<featureSize;j++){
                 tempFeatureList.add(tempPhone.getProduct().getProductFeatures().get(j).getFeature().getFeature_name());
 
@@ -117,23 +195,53 @@ public class PhoneController {
             temp.setFeatureList(tempFeatureList);
             ph.add(temp);
         }
+
         return ph;
     }
 
-
-
-
-    @GetMapping("/getPhones")
-    @JsonIgnoreProperties({"productFeatures","product","key"})
-    public List<Phone> getPhones(){
-        return phservice.getPhones();
-    }
+    /**
+     * This methods gets a Phone given a phone id from the Phone table.
+     * @param id An integer representing the phone id.
+     * @return PhoneHandler
+     * @see PhoneHandler
+     */
     @GetMapping("/getPhone/{id}")
-    public Phone getPhone(@PathVariable int id){
-        return phservice.getPhone(id);
+    public PhoneHandler getPhone(@PathVariable int id){
+
+
+        int featureSize;
+        Phone tempPhone;
+        PhoneHandler temp;
+
+            temp = new PhoneHandler();
+
+            tempPhone = phservice.getPhone(id);
+            temp.setPhoneID(tempPhone.getPhoneID());
+            temp.setBrandName(tempPhone.getProduct().getBrand().getName());
+            temp.setModel(tempPhone.getProduct().getModel());
+            temp.setPrice(tempPhone.getProduct().getPrice());
+            temp.setScreenSize(tempPhone.getProduct().getScreenSize());
+            featureSize=tempPhone.getProduct().getProductFeatures().size();
+            List<String> tempFeatureList = new ArrayList<>(Collections.emptyList());
+            for(int j=0;j<featureSize;j++){
+                tempFeatureList.add(tempPhone.getProduct().getProductFeatures().get(j).getFeature().getFeature_name());
+
+            }
+            temp.setFeatureList(tempFeatureList);
+
+
+
+        return temp;
     }
+
+    /**
+     * This methods deletes a Phone given a phone id.
+     * @param id An integer representing the phone id.
+     */
     @DeleteMapping("/deletePhone/{id}")
-    public String deletePhone(@PathVariable int id){
-        return phservice.deletePhone(id);
+    public void deletePhone(@PathVariable int id){
+
+        phservice.deletePhone(id);
+
     }
 }

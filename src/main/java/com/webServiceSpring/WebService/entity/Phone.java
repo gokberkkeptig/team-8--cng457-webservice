@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "Phone")
-public class Phone {
+public class Phone{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int phoneID;
@@ -19,8 +19,14 @@ public class Phone {
 
    @OneToOne
    @MapsId
-   @JoinColumn(name = "phone_id", referencedColumnName = "phoneID")
+   @JoinColumn(name = "product_id", referencedColumnName = "phoneID")
    private Product product;
+
+
+    public Phone(int phoneID, int internalMemory) {
+        this.phoneID = phoneID;
+        this.internalMemory = internalMemory;
+    }
 
 
 }
