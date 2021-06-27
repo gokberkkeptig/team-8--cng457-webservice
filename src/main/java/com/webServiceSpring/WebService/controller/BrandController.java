@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * This class is the controller of the Brand Entity.
+ * Any requests to modify or get Brand goes through this controller.
  */
 
 @RestController
@@ -24,6 +25,9 @@ public class BrandController {
      * @param brand
      * @see Brand
      * @return Brand
+     * HTTP POST Request
+     * You can use this method by posting a JSON body that includes variables of the Brand class.
+     * Example Request: url/addBrand
      */
     @PostMapping("/addBrand")
     public Brand addBrand(@RequestBody Brand brand){
@@ -34,6 +38,8 @@ public class BrandController {
      * This methods gets all brands from the brand table.
      * @return List <Brand>
      * @see Brand
+     * HTTP GET Request
+     * Example Request: url/getBrands
      */
     @GetMapping("/getBrands")
     @JsonIgnoreProperties({"productList"})
@@ -44,6 +50,8 @@ public class BrandController {
     /**
      * This method deletes a Brand given its name.
      * @param id A String representing the name of the Brand.
+     * HTTP DELETE Request
+     * Example Request: url/deleteBrand/Samsung
      */
     @DeleteMapping("/deleteBrand/{id}")
     public String deleteBrand(@PathVariable String id){

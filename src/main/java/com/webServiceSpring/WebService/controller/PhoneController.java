@@ -19,6 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * This class is the controller of Phone Entity.
+ * Any requests to modify or get Phones goes through this controller.
  */
 
 @RestController
@@ -39,6 +40,9 @@ public class PhoneController {
      * This method adds a Phone to the phone table.
      * @param phoneHandler which holds a phone temporarily to handle Json formats.
      * @see PhoneHandler
+     * HTTP POST Request
+     * You can use this method by posting a JSON body that includes variables of the PhoneHandler class.
+     * Example Request: url/addPhone
      */
     @PostMapping("/addPhone")
     public void addPhone(@RequestBody PhoneHandler phoneHandler){
@@ -80,7 +84,11 @@ public class PhoneController {
     /**
      * This methods gets all phone from a particular brand.
      * @param brand a String representing a Brand.
+     * @see Brand
      * @return List <PhoneHandler>
+     * @see PhoneHandler
+     * HTTP GET Request
+     * Example Request: url/getPhoneByBrand/Samsung
      */
     @GetMapping("/getPhoneByBrand/{brand}")
     public List<PhoneHandler> getPhoneByBrand(@PathVariable String brand){
@@ -123,6 +131,9 @@ public class PhoneController {
      * @param internalMemString A string representing the internal memory type of the phone(Large Memory, Small Memory etc.)
      * @return List <PhoneHandler>
      * @see PhoneHandler
+     * HTTP GET Request
+     * Example Request: url/getPhoneByCriteria?brandName=Samsung&screenSize=17.3
+     * You can use any attribute of a phone as a parameter for criteria.
      */
     @GetMapping("/getPhoneByCriteria")
     public List<PhoneHandler> getPhoneByCriteria(@RequestParam(value = "brandName",required = false) String brand,@RequestParam(value = "model",required = false) String model,@RequestParam(value = "internalMem",required = false) Integer internalMemory,@RequestParam(value = "screenSizeString",required = false) String screenSizeString,@RequestParam(value = "internalMemString",required = false) String internalMemString) {
@@ -168,6 +179,8 @@ public class PhoneController {
      * This methods gets all Phones from the Phone table.
      * @return List <PhoneHandler>
      * @see PhoneHandler
+     * HTTP GET Request
+     * Example Request: url/getPhones
      */
     @GetMapping("/getPhones")
     @JsonIgnoreProperties({"productFeatures","product","key"})
@@ -204,6 +217,8 @@ public class PhoneController {
      * @param id An integer representing the phone id.
      * @return PhoneHandler
      * @see PhoneHandler
+     * HTTP GET Request
+     * Example Request: url/getPhone/3
      */
     @GetMapping("/getPhone/{id}")
     public PhoneHandler getPhone(@PathVariable int id){
@@ -237,6 +252,8 @@ public class PhoneController {
     /**
      * This methods deletes a Phone given a phone id.
      * @param id An integer representing the phone id.
+     * HTTP DELETE Request
+     * Example Request: url/deletePhone/3
      */
     @DeleteMapping("/deletePhone/{id}")
     public void deletePhone(@PathVariable int id){

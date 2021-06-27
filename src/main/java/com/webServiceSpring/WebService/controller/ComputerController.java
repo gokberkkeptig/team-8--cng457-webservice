@@ -16,6 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * This class is the controller of Computer Entity.
+ * Any requests to modify or get Computers goes through this controller.
  */
 
 @RestController
@@ -37,6 +38,9 @@ public class ComputerController {
      * @param computerHandler
      * @see ComputerHandler
      * @see Computer
+     * HTTP POST Request
+     * You can use this method by posting a JSON body that includes variables of the ComputerHandler class.
+     * Example Request: url/addComputer
      */
     @PostMapping("/addComputer")
     public void addComputer(@RequestBody ComputerHandler computerHandler){
@@ -79,10 +83,12 @@ public class ComputerController {
 
     /**
      * This method gets a computer from a particular brand.
-     * @param brand A string representing the brandname.
+     * @param brand A string representing the brand name.
      * @see Brand
      * @return List <ComputeHandler>
      * @see ComputerHandler
+     * HTTP GET Request
+     * Example Request: url/getComputerByBrand/Monster
      */
     @GetMapping("/getComputerByBrand/{brand}")
     public List<ComputerHandler> getComputerByBrand(@PathVariable String brand){
@@ -129,6 +135,8 @@ public class ComputerController {
      * @param memString A String representing the memory type of the computer.(Large Memory)
      * @return List <ComputerHandler>
      * @see ComputerHandler
+     * HTTP GET Request
+     * Example Request: url/getComputerByCriteria?brandName=Monster&screenSize=17.3
      */
     @GetMapping("/getComputerByCriteria")
     public List<ComputerHandler> getComputerByCriteria(@RequestParam(value = "brandName",required = false) String brand,@RequestParam(value = "model",required = false) String model,@RequestParam(value = "proc",required = false) String processor,@RequestParam(value = "memory",required = false) Integer memory,@RequestParam(value = "storage",required = false) Integer storageCapacity,@RequestParam(value = "screenSizeString",required = false) String screenSizeString,@RequestParam(value = "storageString",required = false) String storageString,@RequestParam(value = "memString",required = false) String memString) {
@@ -176,6 +184,8 @@ public class ComputerController {
      * This methods gets all computer from the computer table.
      * @return List <Computer>
      * @see Computer
+     * HTTP GET Request
+     * Example Request: url/getComputers
      */
     @GetMapping("/getComputers")
     public List<Computer> getComputers(){
@@ -190,6 +200,8 @@ public class ComputerController {
      * @param id An integer representing the id of the computer.
      * @return Computer
      * @see Computer
+     * HTTP GET Request
+     * Example Request: url/getComputer/3
      */
     @GetMapping("/getComputer/{id}")
     public Computer getComputer(@PathVariable int id){
@@ -203,6 +215,8 @@ public class ComputerController {
     /**
      * This method deletes a computer given a computer id.
      * @param id An integer representing the id of the computer.
+     * HTTP DELETE REQUEST
+     * Example Request: url/deleteComputer/3
      */
     @DeleteMapping("/deleteComputer/{id}")
     public void deleteComputer(@PathVariable int id){

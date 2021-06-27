@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * This class is the controller of Product Entity.
+ * Any requests to modify or get Products goes through this controller.
  */
 
 @RestController
@@ -40,6 +41,9 @@ public class ProductController {
      * @see ProductHandler
      * @see Product
      * @return Product
+     * HTTP POST Request
+     * You can use this method by posting a JSON body that includes variables of the ProductHandler class.
+     * Example Request: url/addProduct
      */
 
     @PostMapping("/addProduct")
@@ -72,6 +76,10 @@ public class ProductController {
     /**
      * This method gets all products from the Product table.
      * @return List <Product>
+     * @see Product
+     * HTTP GET Request
+     * Example Request: url/getProducts
+     *
      */
     @GetMapping("/getProducts")
     public List<Product> getProducts(){
@@ -81,7 +89,10 @@ public class ProductController {
     /**
      * This method returns a product given a product id from the Product table.
      * @param id integer that represents product id.
+     * @see Product
      * @return Product
+     * HTTP GET Request
+     * Example Request: url/getProduct/3
      */
     @GetMapping("/getProduct/{id}")
     public Product getProduct(@PathVariable int id){
@@ -91,6 +102,8 @@ public class ProductController {
     /**
      * This method deletes a product given a product id from the Product Table.
      * @param id an integer represents product id.
+     * HTTP DELETE Request
+     * Example Request: url/deleteProduct/3
      */
     @DeleteMapping("/deleteProduct/{id}")
     public String deleteProduct(@PathVariable int id){

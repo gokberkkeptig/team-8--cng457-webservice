@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * This class is the controller of the Comment Entity.
+ * Any requests to modify or get Comment goes through this controller.
  */
 
 @RestController
@@ -27,6 +28,9 @@ public class CommentController {
      * @param commentHandler
      * @see CommentHandler
      * @return Comment
+     * HTTP POST Request
+     * You can use this method by posting a JSON body that includes variables of the CommentHandler class.
+     * Example Request: url/addComment
      */
     @PostMapping("/addComment")
     public Comment addComment(@RequestBody CommentHandler commentHandler){
@@ -44,6 +48,8 @@ public class CommentController {
      * This methods gets all comments from the comments table.
      * @return List <Comment>
      * @see Comment
+     * HTTP GET Request
+     * Example Request: url/getComments
      */
     @GetMapping("/getComments")
     public List<Comment> getComments(){
@@ -55,6 +61,8 @@ public class CommentController {
      * @param id An integer representing the comment id.
      * @return Comment
      * @see Comment
+     * HTTP GET Request
+     * Example Request: url/getComment/3
      */
     @GetMapping("/getComment/{id}")
     public Comment getComment(@PathVariable int id){
@@ -64,6 +72,8 @@ public class CommentController {
     /**
      * This methods deletes a comment given a comment id.
      * @param id An integer representing the comment id.
+     * HTTP DELETE Request
+     * Example Request: url/deleteComment/3
      */
     @DeleteMapping("/deleteComment/{id}")
     public String deleteComment(@PathVariable int id){

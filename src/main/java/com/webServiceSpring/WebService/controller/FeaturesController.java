@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * This class is the controller of Features Entity.
+ * Any requests to modify or get Features goes through this controller.
  */
 
 @RestController
@@ -22,6 +23,9 @@ public class FeaturesController {
      * @param feature A Features Entity.
      * @see Features
      * @return Features
+     * HTTP POST Request
+     * You can use this method by posting a JSON body that includes variables of the Features class.
+     * Example Request: url/addFeature
      */
     @PostMapping("/addFeature")
     public Features addFeatures(@RequestBody Features feature){
@@ -31,7 +35,9 @@ public class FeaturesController {
 
     /**
      * This methods gets all Features from the Features table.
-     * @return
+     * @return List <Features>
+     * HTTP GET Request
+     * Example Request: url/getFeatures
      */
     @GetMapping("/getFeatures")
     public List<Features> getFeatures(){
@@ -42,6 +48,8 @@ public class FeaturesController {
      * This method gets a feature given a feature id.
      * @param id An integer representing the feature id.
      * @return Features
+     * HTTP GET Request
+     * Example Request: url/getFeature/3
      */
     @GetMapping("/getFeature/{id}")
     public Features getFeature(@PathVariable int id){
@@ -51,6 +59,8 @@ public class FeaturesController {
     /**
      *  This method deletes a feature given a feature id.
      * @param id An integer representing the feature id.
+     * HTTP GET Request
+     * Example Request: url/deleteFeatures/3
      */
     @DeleteMapping("/deleteFeatures/{id}")
     public String deleteFeatures(@PathVariable int id){
