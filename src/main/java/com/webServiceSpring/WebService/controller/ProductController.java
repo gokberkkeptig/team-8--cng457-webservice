@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * Mehmet Bengican Altunsu, Yusuf Gökberk Keptiğ
  * This class is the controller of Product Entity.
  * Any requests to modify or get Products goes through this controller.
  */

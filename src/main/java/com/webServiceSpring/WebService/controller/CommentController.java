@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * @author Mehmet Bengican Altunsu, Yusuf Gökberk Keptiğ
  * This class is the controller of the Comment Entity.
  * Any requests to modify or get Comment goes through this controller.
  */

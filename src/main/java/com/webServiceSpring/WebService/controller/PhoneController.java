@@ -18,6 +18,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * Mehmet Bengican Altunsu, Yusuf Gökberk Keptiğ
  * This class is the controller of Phone Entity.
  * Any requests to modify or get Phones goes through this controller.
  */
