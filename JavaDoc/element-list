@@ -1,0 +1,9 @@
+com.webServiceSpring.WebService
+com.webServiceSpring.WebService.controller
+com.webServiceSpring.WebService.Controller
+com.webServiceSpring.WebService.entity
+com.webServiceSpring.WebService.entity.connectors
+com.webServiceSpring.WebService.entity.JsonHandlers
+com.webServiceSpring.WebService.repository
+com.webServiceSpring.WebService.service
+com.webServiceSpring.WebService.Service
